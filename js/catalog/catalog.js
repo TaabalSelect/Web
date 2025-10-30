@@ -25,11 +25,13 @@ function buildCard(product) {
     article.setAttribute("role", "article");
     article.setAttribute("aria-label", product.name);
 
-    // Imagen
+    // ============================================================
+    // Imagen — corregido para usar /assets/images/
+    // ============================================================
     const imgWrap = node.querySelector(".img-wrap");
     const img = node.querySelector("img");
     if (vis.showImage) {
-      img.src = product.image || "./assets/images/imagen-prueba.webp";
+      img.src = product.image || "/assets/images/imagen-prueba.webp";
       img.alt = product.name || "Producto";
       img.loading = "lazy";
       img.decoding = "async";
@@ -37,17 +39,23 @@ function buildCard(product) {
       imgWrap?.remove();
     }
 
-    // Título (siempre recomendable mostrarlo, pero respetamos bandera)
+    // ============================================================
+    // Título
+    // ============================================================
     const titleEl = node.querySelector(".title");
     if (vis.showName) titleEl.textContent = product.name;
     else titleEl.remove();
 
+    // ============================================================
     // Descripción
+    // ============================================================
     const descEl = node.querySelector(".desc");
     if (vis.showDescription) descEl.textContent = product.description || "";
     else descEl.remove();
 
+    // ============================================================
     // Meta: precio + marca + categoría
+    // ============================================================
     const metaEl = node.querySelector(".meta");
     // Marca
     if (vis.showBrand && product.brand) {
@@ -73,7 +81,9 @@ function buildCard(product) {
       metaEl.appendChild(cat);
     }
 
-    // Cantidades y botón agregar
+    // ============================================================
+    // Cantidades y botón "Agregar"
+    // ============================================================
     const qtyInput = node.querySelector(".qty-input");
     const minus = node.querySelector(".qty-btn.minus");
     const plus = node.querySelector(".qty-btn.plus");
@@ -107,15 +117,19 @@ function buildCard(product) {
 
   const parts = [];
 
-  // Imagen
+  // ============================================================
+  // Imagen (fallback) — corregido también
+  // ============================================================
   if (vis.showImage) {
     parts.push(`
     <div class="img-wrap">
-      <img src="${product.image || "./assets/images/imagen-prueba.webp"}" alt="${product.name}" loading="lazy">
+      <img src="${product.image || "/assets/images/imagen-prueba.webp"}" alt="${product.name}" loading="lazy">
     </div>`);
   }
 
-  // Cuerpo
+  // ============================================================
+  // Cuerpo de la tarjeta
+  // ============================================================
   const desc = vis.showDescription ? `<p class="desc">${product.description || ""}</p>` : "";
   const brand = vis.showBrand && product.brand ? `<span class="brand">${product.brand}</span>` : "";
   const cat = vis.showCategory && product.category ? `<span class="category">${product.category}</span>` : "";
