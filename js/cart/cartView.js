@@ -110,9 +110,9 @@ export function renderItems(cartArray) {
 
     // Plantilla HTML del producto
     row.innerHTML = `
-      ${vis.showImage ? `<div class="cart-thumb"><img src="${it.image || "./assets/images/imagen-prueba.webp"}" alt="${it.name}"></div>` : ""}
+      ${vis.showImage ? `<div class="cart-thumb"><img src="${it.image || "/assets/images/imagen-prueba.webp"}" alt="${it.name}"></div>` : ""}
       <div class="cart-item-info">
-        <p class="code"><strong>Código:</strong> ${it.code || "N/D"}</p>
+        <p class="code"><strong>Código:</strong> ${it.id || "N/D"}</p>
         <p class="name">${vis.showName ? it.name : "Producto"}</p>
         <p class="desc">${it.description || ""}</p>
         <div class="qty-line">
