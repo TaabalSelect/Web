@@ -85,8 +85,22 @@ function normalizeProduct(rowObj, map, idx) {
   const description = String(rowObj[map.kDesc] ?? "").trim();
   const brand = String(rowObj[map.kBrand] ?? "").trim();
   const category = String(rowObj[map.kCat] ?? "Sin categoría").trim() || "Sin categoría";
-  const rawImg = rowObj[map.kImg];
-  const image = isLikelyImageURL(rawImg) ? String(rawImg).trim() : ""; // placeholder si vacío
+
+  // ============================================================
+  // CORREGIDO: Soporte para nombres de imagen locales en /assets/images/
+  // ============================================================
+  const rawImg = String(rowObj[map.kImg] || "").trim();
+  let image = "";
+
+  if (isLikelyImageURL(rawImg)) {
+    image = rawImg; // URL completa válida (https o data:)
+  } else if (rawImg) {
+    // Si solo se escribió el nombre del archivo (con o sin extensión)
+    const hasExt = /\.(png|jpe?g|webp|gif|svg)$/i.test(rawImg);
+    image = `/assets/images/${hasExt ? rawImg : rawImg + ".webp"}`;
+  }
+  // ============================================================
+
   const price = toNumber(rowObj[map.kPrice]);
   return { id, name, description, brand, category, image, price, raw: rowObj };
 }
