@@ -31,19 +31,43 @@ export class CartModel {
     this._t = setTimeout(() => safeSave(STORAGE_KEYS.CART, this.items), 120);
   }
 
+  // ============================================================
+  // Agregar producto (corrigido para manejar imágenes locales)
+  // ============================================================
   add(product, qty = 1) {
     const q = Math.max(1, qty | 0);
     const cur = this.items[product.id];
-    if (cur) cur.qty += q;
-    else this.items[product.id] = { id: product.id, name: product.name, price: product.price, image: product.image, qty: q };
+
+    // Si ya existe en el carrito, solo aumenta cantidad
+    if (cur) {
+      cur.qty += q;
+    } else {
+      // Asegurar que la imagen siempre se guarde correctamente
+      const imagePath = product.image || `/assets/images/imagen-prueba.webp`;
+
+      this.items[product.id] = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: imagePath,
+        qty: q
+      };
+    }
+
     this._scheduleSave();
   }
 
+  // ============================================================
+  // Eliminar producto del carrito
+  // ============================================================
   remove(id) {
     delete this.items[id];
     this._scheduleSave();
   }
 
+  // ============================================================
+  // Cambiar cantidad de un producto
+  // ============================================================
   setQty(id, qty) {
     const it = this.items[id];
     if (!it) return;
@@ -51,19 +75,31 @@ export class CartModel {
     this._scheduleSave();
   }
 
+  // ============================================================
+  // Vaciar carrito
+  // ============================================================
   clear() {
     this.items = {};
     this._scheduleSave();
   }
 
+  // ============================================================
+  // Total de artículos
+  // ============================================================
   count() {
-    return Object.values(this.items).reduce((a,b) => a + b.qty, 0);
+    return Object.values(this.items).reduce((a, b) => a + b.qty, 0);
   }
 
+  // ============================================================
+  // Subtotal monetario
+  // ============================================================
   subtotal() {
-    return Object.values(this.items).reduce((a,b) => a + b.qty * b.price, 0);
+    return Object.values(this.items).reduce((a, b) => a + b.qty * b.price, 0);
   }
 
+  // ============================================================
+  // Convertir a arreglo para renderizado
+  // ============================================================
   toArray() {
     return Object.values(this.items);
   }
