@@ -1,0 +1,287 @@
+/* ==========================================================================
+   TAABAL SELECT — responsive.css (v22.5 final)
+   - Mobile: burbuja de búsqueda igual al carrito, sin botón duplicado
+   - Desktop: buscador expandido hasta casi FAQ
+   ========================================================================== */
+
+/* <= 1200px */
+@media (max-width:1200px){
+  .header-content{padding:.75rem;}
+  .catalog{padding:0 .75rem;}
+}
+
+/* <= 992px */
+@media (max-width:992px){
+  .header-toolbar{grid-template-columns:1fr 1fr auto;gap:.6rem;}
+  .catalog{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+  .drawer{width:min(420px,100%);}
+}
+
+/* <= 768px */
+@media (max-width:768px){
+  .header-toolbar{grid-template-columns:1fr 1fr;gap:.6rem;}
+  .nav-btn{justify-content:center;}
+}
+
+/* ======== MÓVILES ======== */
+@media (max-width:560px){
+  :root{
+    --h-top:60px;
+    --h-bottom:56px;
+    --h-total:calc(var(--h-top) + var(--h-bottom));
+  }
+
+  /* HEADER AZUL fijo */
+  .header-top{
+    position:fixed !important; top:0; left:0; right:0;
+    height:var(--h-top) !important;
+    background:linear-gradient(100deg,var(--blue),var(--green)) !important;
+    display:flex !important; align-items:center !important; justify-content:center !important;
+    padding:0 .5rem !important; z-index:100;
+  }
+  body{padding-top:var(--h-total) !important;}
+  .brand{display:flex !important; justify-content:center !important; align-items:center !important;}
+  .brand .logo{height:38px !important; width:auto !important;}
+
+  /* Carrito */
+  .icon-btn{
+    position:absolute !important; top:.8rem !important; right:.8rem !important;
+    width:44px !important; height:44px !important;
+    background:rgba(255,255,255,.18) !important;
+    backdrop-filter:saturate(120%) blur(6px) !important;
+    border-radius:50% !important;
+    box-shadow:0 2px 6px rgba(0,0,0,.15) !important;
+    border:none !important;
+    z-index:102 !important;
+  }
+
+  /* Burbuja de búsqueda móvil — idéntica al carrito */
+  .search-mobile {
+    position: absolute !important;
+    top: .8rem !important;
+    right: 4.6rem !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(255,255,255,.18) !important;
+    backdrop-filter: saturate(120%) blur(6px) !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15) !important;
+    border: none !important;
+    transition: all 0.25s ease-in-out !important;
+    z-index: 103 !important;
+    overflow: hidden !important;
+  }
+
+  /* Botón interno de la burbuja: transparente, sin bordes */
+  .search-mobile .search-toggle-btn{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:100% !important;
+    height:100% !important;
+    background:transparent !important;
+    border:0 !important;
+    padding:0 !important;
+    box-shadow:none !important;
+    border-radius:50% !important;
+  }
+
+  /* Ícono de lupa dentro */
+  .search-mobile .search-icon {
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    opacity: 0.95;
+    transition: opacity 0.2s ease;
+  }
+
+  /* Estado expandido */
+  .search-mobile.open {
+    width: 92vw !important;
+    max-width: 580px !important;
+    border-radius: 12px !important;
+    padding-left: 2.2rem !important;
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: #fff !important;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25) !important;
+    z-index: 104 !important;
+  }
+
+  /* Oculta completamente la lupa y el botón al expandirse */
+  .search-mobile.open .search-icon,
+  .search-mobile.open .search-toggle-btn{
+    display:none !important;
+  }
+
+  /* Input visible solo cuando está abierto */
+  .search-mobile .search-input {
+    display: none !important;
+  }
+  .search-mobile.open .search-input {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    font-size: 15px;
+    padding-right: 2rem !important;
+    color: #111;
+  }
+
+  /* Ícono de cierre (X) */
+  .search-mobile.open::before {
+    content: "✕";
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #555;
+    cursor: pointer;
+  }
+
+  /* Ocultar buscador desktop en móvil */
+  .search-desktop{display:none !important;}
+
+  /* Barra amarilla fija */
+  .header-bottom{
+    position:fixed !important;
+    top:var(--h-top); left:0; right:0;
+    height:var(--h-bottom) !important;
+    background:var(--gold) !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    z-index:99;
+  }
+
+  .header-toolbar{
+    display:grid !important;
+    grid-template-columns:70% 30% !important;
+    gap:.5rem !important;
+    align-items:center !important;
+    width:100% !important;
+    padding:0 .6rem !important;
+  }
+
+  .category,.nav-btn{width:100% !important;}
+
+  /* Catálogo */
+.catalog{
+  display:grid !important;
+  grid-template-columns:repeat(2,1fr) !important;
+  gap:.75rem !important;
+  padding:calc(var(--h-bottom) - 2.3rem) .6rem .6rem !important;
+}
+
+  /* Drawer */
+  .drawer{width:100% !important;}
+  .overlay{top:var(--h-total) !important; height:calc(100vh - var(--h-total)) !important;}
+}
+
+/* ======== DESKTOP (ajuste solicitado) ======== */
+@media (min-width:561px){
+  .header-toolbar{
+    display:grid !important;
+    grid-template-columns:auto 1fr auto !important;
+    align-items:center !important;
+    gap:.8rem !important;
+    width:100%;
+  }
+
+  /* Buscador desktop */
+  .search-desktop{
+    display:flex !important; align-items:center !important;
+    background:#fff !important; border-radius:8px !important;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    height:44px;
+    padding:0 .8rem !important;
+    width:100% !important;
+    max-width:none !important;
+    position:relative;
+  }
+
+  .search-desktop input{
+    border:none !important; outline:none !important; width:100%;
+    font-size:15px; padding-right:1.8rem; height:100%;
+  }
+
+  .search-desktop .search-icon{
+    position:absolute; right:.8rem; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; opacity:.6;
+  }
+
+  .search-mobile{display:none !important;}
+}
+
+/* Escritorio ancho */
+@media (min-width:1440px){
+  .catalog{max-width:1400px;}
+}
+
+/* ===== FIX: imágenes del carrito ===== */
+.drawer .items img,
+.drawer .cart-item img {
+  width: 60px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* ===== FAQ dialog (mejorado) ===== */
+.faq-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+.faq-dialog {
+  border: none;
+  border-radius: 12px;
+  max-width: 720px;
+  width: 90%;
+  padding: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+.faq-wrap {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 2rem 2rem;
+  position: relative;
+}
+.faq-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.faq-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+.close-faq {
+  border: none;
+  background: transparent;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #444;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.close-faq:hover {
+  color: #000;
+  transform: scale(1.2);
+}
+.faq-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.faq-list li {
+  margin-bottom: .75rem;
+  line-height: 1.6;
+}

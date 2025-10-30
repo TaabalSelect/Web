@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taabal Select — Catálogo</title>
+  <meta name="description" content="Catálogo dinámico de productos Taabal Select" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/layout.css?v=10.0">
+  <link rel="stylesheet" href="./css/responsive.css?v=21.4">
+
+<link rel="icon" href="./assets/images/logo.png?v=2" type="image/png">
+<link rel="apple-touch-icon" href="./assets/images/logo.png">
+</head>
+
+<body>
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="site-header">
+    <!-- Franja azul -->
+    <div class="header-top">
+      <div class="header-content">
+        <div class="brand">
+          <img src="./assets/images/logo.png" alt="Taabal Select" class="logo" width="120" height="40" />
+        </div>
+
+        <!-- Burbuja de búsqueda móvil -->
+        <div class="search-mobile">
+          <button class="search-toggle-btn" aria-label="Buscar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+          <input type="text" class="search-input" placeholder="Buscar por nombre, descripción o marca..." />
+        </div>
+
+        <!-- Carrito -->
+        <button id="openCartBtn" class="icon-btn" aria-haspopup="dialog" aria-controls="cartDrawer" aria-label="Abrir carrito">
+          <img src="./assets/icons/cart.svg" alt="" aria-hidden="true" />
+          <span id="cartBadge" class="badge" aria-live="polite">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Franja amarilla -->
+    <div class="header-bottom">
+      <div class="header-toolbar">
+        <!-- Categorías -->
+        <div class="category">
+          <button id="categoryToggle" class="dropdown-toggle" aria-expanded="false" aria-controls="categoryMenu">
+            Categorías
+            <img src="./assets/icons/chevron.svg" alt="" aria-hidden="true">
+          </button>
+          <div id="categoryMenu" class="dropdown" role="menu" aria-label="Categorías"></div>
+        </div>
+
+        <!-- Buscador desktop -->
+        <div class="search-desktop search">
+          <label for="searchInput" class="sr-only">Buscar producto</label>
+          <img src="./assets/icons/search.svg" alt="" aria-hidden="true" class="search-icon">
+          <input id="searchInput" class="search-input" type="search"
+                placeholder="Buscar por nombre, descripción o marca..." autocomplete="off" />
+        </div>
+
+        <!-- FAQ -->
+        <button id="faqBtn" class="nav-btn">FAQ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CATÁLOGO
+  ============================================================ -->
+  <main id="catalog" class="catalog" tabindex="-1" aria-live="polite"></main>
+
+  <!-- ============================================================
+       DRAWER CARRITO (alineado a cartView.js y layout.css)
+  ============================================================ -->
+  <aside id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-describedby="cartDesc" hidden>
+   <div class="drawer-header">
+  <h2>Tu carrito</h2>
+  <button id="closeCartBtn" class="close-cart-btn" aria-label="Cerrar carrito">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+</div>
+
+
+    <!-- Contenido scrollable -->
+    <div id="cartDesc" class="drawer-content">
+      <div id="cartItems" class="items"></div>
+    </div>
+
+    <!-- Footer del carrito: subtotal + acciones + disclaimer -->
+    <div class="drawer-footer">
+      <div class="totals">
+        <strong>Subtotal</strong>
+        <span id="cartSubtotal">$0.00</span>
+      </div>
+
+      <div class="cart-actions-grid">
+        <!-- WhatsApp -->
+        <a id="whatsappBtn" href="#" class="btn-whatsapp" aria-label="Enviar pedido por WhatsApp">
+          <img src="./assets/icons/whatsapp.svg" alt="" />
+          Enviar pedido por WhatsApp
+        </a>
+
+        <!-- Correo -->
+        <a id="emailBtn" href="#" class="btn-email" aria-label="Enviar pedido por correo">
+          <img src="./assets/icons/mail.svg" alt="" />
+          Enviar pedido por Correo
+        </a>
+
+        <!-- Vaciar -->
+        <button id="clearCartBtn" class="btn-trash" aria-label="Vaciar carrito">
+          <img src="./assets/icons/trash.svg" alt="">
+        </button>
+      </div>
+
+      <p class="invoice-hint">
+        Para facturación es necesaria su constancia de situación fiscal no mayor a 3 meses de antigüedad.
+      </p>
+    </div>
+  </aside>
+
+  <div id="overlay" class="overlay" hidden></div>
+
+  <!-- Diálogo de confirmación -->
+  <dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle">
+    <h3 id="confirmTitle">¿Vaciar carrito?</h3>
+    <p>Se eliminarán todos los productos.</p>
+    <div class="confirm-actions">
+      <button id="confirmYes" class="btn btn-danger">Sí, vaciar</button>
+      <button id="confirmNo" class="btn">Cancelar</button>
+    </div>
+  </dialog>
+
+  <!-- ============================================================
+       FAQ (dialog)
+  ============================================================ -->
+  <dialog id="faqDialog" class="faq-dialog" aria-labelledby="faqTitle">
+    <div class="faq-wrap">
+      <header class="faq-header">
+        <h2 id="faqTitle">Preguntas Frecuentes</h2>
+        <button id="closeFaqBtn" class="close-faq" aria-label="Cerrar FAQ">&times;</button>
+      </header>
+      <ul class="faq-list">
+        <li><b>¿Cómo cotizo?</b> Agrega productos al carrito y envíalos por WhatsApp o correo.</li>
+        <li><b>¿Puedo facturar?</b> Sí, adjunta tu constancia fiscal actualizada.</li>
+        <li><b>¿Precios?</b> Las imágenes son ilustrativas; los precios pueden variar según cotización.</li>
+      </ul>
+    </div>
+  </dialog>
+
+  <!-- ============================================================
+       TEMPLATE DE PRODUCTO
+  ============================================================ -->
+  <template id="productCardTemplate">
+    <article class="card">
+      <div class="img-wrap">
+        <img src="" alt="" loading="lazy" decoding="async">
+      </div>
+      <div class="card-body">
+        <h3 class="title"></h3>
+        <p class="desc"></p>
+        <div class="meta">
+          <span class="price"></span>
+        </div>
+        <div class="qty">
+          <button class="qty-btn minus" aria-label="Disminuir cantidad">–</button>
+          <input class="qty-input" type="number" min="1" value="1" aria-label="Cantidad">
+          <button class="qty-btn plus" aria-label="Aumentar cantidad">+</button>
+        </div>
+        <button class="add-btn">Agregar</button>
+      </div>
+    </article>
+  </template>
+
+  <!-- JS principal -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

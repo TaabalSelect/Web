@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Taabal Select — base.css (optimizado)
+   - Variables, resets, tipografía y helpers
+   ========================================================================== */
+
+:root {
+  /* Colores principales */
+  --blue:#253992;
+  --green:#0B3D2E;
+  --gold:#E6B221;
+  --bg:#F8F9FB;
+  --text:#13223a;
+  --muted:#6b778c;
+  --card:#ffffff;
+
+  /* Sombras y bordes */
+  --shadow:0 10px 20px rgba(0,0,0,.08);
+  --shadow-lg:0 24px 48px rgba(0,0,0,.12);
+  --radius:16px;
+  --radius-sm:12px;
+  --radius-xs:10px;
+
+  /* Transiciones */
+  --tr-fast:.18s cubic-bezier(.2,.7,.2,1);
+  --tr:.3s cubic-bezier(.2,.7,.2,1);
+
+  /* Tipografía base */
+  --font-size:16px;
+  --line-height:1.5;
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;margin:0;padding:0;}
+body{
+  font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  font-size:var(--font-size);
+  line-height:var(--line-height);
+  color:var(--text);
+  background:var(--bg);
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button,input,textarea{font:inherit;cursor:pointer;}
+label{display:inline-block;}
+
+/* ============================================================
+   Accesibilidad
+============================================================ */
+.sr-only{
+  position:absolute;width:1px;height:1px;margin:-1px;border:0;padding:0;
+  clip-path:inset(100%);clip:rect(0 0 0 0);overflow:hidden;
+}
+.skip-link{
+  position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+}
+.skip-link:focus{
+  left:1rem;top:1rem;width:auto;height:auto;padding:.5rem .75rem;
+  background:#fff;border-radius:12px;box-shadow:var(--shadow);z-index:10000;
+}
+
+/* ============================================================
+   Utilidades
+============================================================ */
+.container{max-width:1200px;margin:0 auto;padding:0 1rem;}
+.shadow{box-shadow:var(--shadow);}
+.round{border-radius:var(--radius);}
+.text-muted{color:var(--muted);}
+.hidden{display:none !important;}
+
+/* ============================================================
+   Botones
+============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.7rem 1rem;border-radius:999px;border:1px solid transparent;
+  background:#fff;color:var(--text);
+  box-shadow:var(--shadow);
+  transition:transform var(--tr-fast),box-shadow var(--tr-fast),opacity var(--tr-fast);
+}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-lg);}
+.btn:active{transform:translateY(0);}
+.btn-primary{background:var(--blue);color:#fff;}
+.btn-success{background:var(--green);color:#fff;}
+.btn-danger{background:#e53935;color:#fff;}
+.btn-ghost{background:transparent;border-color:#e6e9ef;}
+
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:22px;height:22px;padding:2px 6px;
+  background:var(--gold);color:#000;font-weight:700;font-size:.75rem;
+  border-radius:999px;border:1px solid rgba(0,0,0,.15);
+}
